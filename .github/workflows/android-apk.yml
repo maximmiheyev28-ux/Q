@@ -20,7 +20,7 @@ jobs:
           python3 - <<'PY'
           from PIL import Image
           import glob, os
-          required = {"city.png": (480,270), "metal_tile.png": (16,16), "samurai.png": (128,48), "enemies.png": (96,48), "projectiles.png": (64,16), "effects.png": (256,48)}
+          required = {"city.png": (480,270), "metal_tile.png": (16,16), "samurai.png": (192,64), "enemies.png": (96,48), "projectiles.png": (64,16), "effects.png": (256,48)}
           for name, size in required.items():
               path = os.path.join("assets", name)
               assert os.path.isfile(path), f"Missing asset: {name}"
