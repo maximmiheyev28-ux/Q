@@ -122,12 +122,19 @@ impl Game {
         if index >= self.enemies.len() || !self.enemies[index].alive {
             return;
         }
-        let enemy = &mut self.enemies[index];
-        enemy.hp -= 1;
-        enemy.hit_timer = 0.22;
-        if enemy.hp <= 0 {
-            enemy.alive = false;
-            enemy.death_timer = if enemy.kind == 2 { 0.82 } else { 0.42 };
+        let killed = {
+            let enemy = &mut self.enemies[index];
+            enemy.hp -= 1;
+            enemy.hit_timer = 0.22;
+            if enemy.hp <= 0 {
+                enemy.alive = false;
+                enemy.death_timer = if enemy.kind == 2 { 0.82 } else { 0.42 };
+                true
+            } else {
+                false
+            }
+        };
+        if killed {
             self.kills += 1;
         }
     }
@@ -179,6 +186,10 @@ impl Game {
                     self.damage_enemy(i);
                 }
             }
+        }
+
+        if self.dash_timer > 0.0 {
+            self.player.vx = self.facing * 410.0;
         }
 
         if jump && self.player.vy.abs() < 1.0 {
@@ -334,7 +345,7 @@ struct Assets {
 }
 
 async fn load_assets() -> Assets {
-    let load = |name: &str| async move {
+    let load = |name: &'static str| async move {
         load_texture(name).await.unwrap_or_else(|e| panic!("Failed to load {}: {}", name, e))
     };
     let assets = Assets {
