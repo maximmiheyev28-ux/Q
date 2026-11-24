@@ -1,0 +1,20 @@
+[package]
+name = "neon-blade"
+version = "0.2.0"
+edition = "2021"
+
+[dependencies]
+macroquad = "0.4.14"
+
+[package.metadata.android]
+package = "com.neonblade.game"
+label = "NEON BLADE"
+min_sdk_version = 23
+target_sdk_version = 35
+build_targets = ["aarch64-linux-android", "armv7-linux-androideabi"]
+assets = "assets/"
+fullscreen = true
+
+[package.metadata.android.activity_attributes]
+"android:screenOrientation" = "landscape"
+"android:exported" = "true"
