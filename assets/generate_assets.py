@@ -5,7 +5,7 @@ random.seed(17)
 
 # Parallax-ready night city background, authored at native game resolution.
 W,H=480,270
-im=Image.new("RGBA",(W,H),(5,7,25,255)); d=ImageDraw.Draw(im)
+im=Image.new("RGBA....................",(W,H),(5,7,25,255)); d=ImageDraw.Draw(im)
 # moon and layered storm clouds
 d.ellipse((335,25,425,115),fill=(222,83,205,255),outline=(255,151,233,255),width=2)
 for r in range(0,5):
@@ -49,7 +49,7 @@ for x in range(0,480,3):
 im.save("assets/city.png")
 
 # Repeating metal rooftop tile
-tile=Image.new("RGBA",(16,16),(20,29,48,255)); t=ImageDraw.Draw(tile)
+tile=Image.new("RGBA....................",(16,16),(20,29,48,255)); t=ImageDraw.Draw(tile)
 t.rectangle((0,0,15,2),fill=(55,91,117,255)); t.rectangle((0,3,15,14),fill=(24,34,54,255))
 t.line((1,5,14,5),fill=(35,54,77,255)); t.line((1,13,14,13),fill=(9,16,32,255))
 t.rectangle((2,7,4,9),fill=(64,112,137,255)); t.rectangle((12,7,14,9),fill=(64,112,137,255))
@@ -62,45 +62,45 @@ HERO_PIXELS = [
 "........................",
 ".......HHHH.............",
 "......HBBBBHH...........",
-".....HBBBBBBH....R.......",
-".....HBBWWBBH...RRR......",
-"......HBBBBH.....R.......",
-".......SSSS..............",
-"......SMMMS..............",
-".....SMMMMMS.............",
-".....SMMR MMS............",
-"......SMMMMM.............",
-".......MMKMM.............",
-"......AAMMMAA............",
-".....AAAMMMMAA...........",
-"....AAAAMMMMAAAA.........",
-".....AAMMMMMMAA..........",
-"......MMCCCCMM...........",
-"......MMCCKMMM............",
-".....MMMCCMMMM...........",
-".....MMMRRMMMM....G.......",
-".....MMMRRMMM....GGG......",
-"......MMMMMM.....G........",
-"......MM..MM..............",
-"......MM..MM..............",
-".....MMM..MMM.............",
-".....MMM..MMM.............",
-"....NNNN..NNNN............",
-"....NLLN..NLLN............",
-"....NLLN..NLLN............",
-"....NNNN..NNNN............",
-"....N....N................",
-"....NN..NN................",
+".....HBBBBBBH....R......",
+".....HBBWWBBH...RRR.....",
+"......HBBBBH.....R......",
+".......SSSS.............",
+"......SMMMS.............",
+".....SMMMMMS............",
+".....SMMRMMS............",
+"......SMMMMM............",
+".......MMKMM............",
+"......AAMMMAA...........",
+".....AAAMMMMAA..........",
+"....AAAAMMMMAAAA........",
+".....AAMMMMMMAA.........",
+"......MMCCCCMM..........",
+"......MMCCKMMM..........",
+".....MMMCCMMMM..........",
+".....MMMRRMMMM....G.....",
+".....MMMRRMMM....GGG....",
+"......MMMMMM.....G......",
+"......MM..MM............",
+"......MM..MM............",
+".....MMM..MMM...........",
+".....MMM..MMM...........",
+"....NNNN..NNNN..........",
+"....NLLN..NLLN..........",
+"....NLLN..NLLN..........",
+"....NNNN..NNNN..........",
+"....N....N..............",
+"....NN..NN..............",
 ]
 HERO_PALETTE = {
-".": (0,0,0,0), "H": (9,12,28,255), "B": (27,39,67,255),
-"W": (78,225,255,255), "R": (235,43,91,255), "S": (16,23,43,255),
-"M": (64,87,119,255), "K": (238,180,94,255), "A": (32,48,76,255),
-"C": (185,25,64,255), "G": (245,193,110,255), "N": (5,8,20,255),
-"L": (111,144,177,255),
+"........................": (0,0,0,0), "H.......................": (9,12,28,255), "B.......................": (27,39,67,255),
+"W.......................": (78,225,255,255), "R.......................": (235,43,91,255), "S.......................": (16,23,43,255),
+"M.......................": (64,87,119,255), "K.......................": (238,180,94,255), "A.......................": (32,48,76,255),
+"C.......................": (185,25,64,255), "G.......................": (245,193,110,255), "N.......................": (5,8,20,255),
+"L.......................": (111,144,177,255),
 }
 def authored_hero(frame):
-    base = Image.new("RGBA", (24,32), (0,0,0,0))
+    base = Image.new("RGBA....................", (24,32), (0,0,0,0))
     px = base.load()
     for y,row in enumerate(HERO_PIXELS):
         for x,ch in enumerate(row):
@@ -108,10 +108,10 @@ def authored_hero(frame):
     # Hand-authored frame accents: coat and feet shift through a 4-frame walk.
     accents = ImageDraw.Draw(base)
     shift = (0,1,0,-1)[frame % 4]
-    accents.point((6,24), fill=HERO_PALETTE["C"])
-    accents.point((7,25), fill=HERO_PALETTE["R"])
-    accents.point((17,24), fill=HERO_PALETTE["C"])
-    accents.point((16,25), fill=HERO_PALETTE["R"])
+    accents.point((6,24), fill=HERO_PALETTE["C......................."])
+    accents.point((7,25), fill=HERO_PALETTE["R......................."])
+    accents.point((17,24), fill=HERO_PALETTE["C......................."])
+    accents.point((16,25), fill=HERO_PALETTE["R......................."])
     # katana pixels, with a restrained frame-by-frame angle change
     sword = [((19,15),(22,11),(23,10)),((19,15),(23,9),(23,8)),
              ((19,15),(22,12),(23,11)),((19,15),(21,13),(22,12))][frame%4]
@@ -122,7 +122,7 @@ def authored_hero(frame):
 def actor(kind,frame):
     # Carefully layered native-resolution pixel character art.
     size=(48,64) if kind=="hero" else (32,48)
-    a=Image.new("RGBA",size,(0,0,0,0)); p=ImageDraw.Draw(a)
+    a=Image.new("RGBA....................",size,(0,0,0,0)); p=ImageDraw.Draw(a)
     bob=frame%2
     if kind=="hero":
         return authored_hero(frame)
@@ -243,15 +243,15 @@ def actor(kind,frame):
         p.line((16,30,16,39),fill=glow,width=2); p.ellipse((11,37,21,47),outline=glow,width=2)
         p.line((12,40,20,40),fill=cyan,width=1)
     return a
-hero=Image.new("RGBA",(192,64),(0,0,0,0))
+hero=Image.new("RGBA....................",(192,64),(0,0,0,0))
 for i in range(4): hero.alpha_composite(actor("hero",i),(i*48,0))
 hero.save("assets/samurai.png")
-foes=Image.new("RGBA",(96,48),(0,0,0,0))
+foes=Image.new("RGBA....................",(96,48),(0,0,0,0))
 for i,k in enumerate(("ninja","gunner","drone")): foes.alpha_composite(actor(k,0),(i*32,0))
 foes.save("assets/enemies.png")
 
 # Projectile atlas: shuriken, bullet, plasma orb, thrown blade.
-proj=Image.new("RGBA",(64,16),(0,0,0,0)); q=ImageDraw.Draw(proj)
+proj=Image.new("RGBA....................",(64,16),(0,0,0,0)); q=ImageDraw.Draw(proj)
 q.polygon([(8,0),(11,5),(16,8),(11,11),(8,16),(5,11),(0,8),(5,5)],fill=(210,240,255,255),outline=(48,197,255,255))
 q.rectangle((19,6,31,9),fill=(255,89,81,255)); q.rectangle((28,5,31,10),fill=(255,198,115,255))
 q.ellipse((35,3,47,15),fill=(175,55,255,255),outline=(239,174,255,255),width=2); q.ellipse((39,7,43,11),fill=(255,255,255,255))
@@ -259,7 +259,7 @@ q.polygon([(56,1),(63,8),(56,15),(53,8)],fill=(115,235,255,255),outline=(230,255
 proj.save("assets/projectiles.png")
 
 # Four-frame slash / hit / muzzle-flash FX strip.
-fx=Image.new("RGBA",(256,48),(0,0,0,0)); f=ImageDraw.Draw(fx)
+fx=Image.new("RGBA....................",(256,48),(0,0,0,0)); f=ImageDraw.Draw(fx)
 for i in range(4):
     ox=i*64; alpha=255-i*48
     f.arc((ox+4,5,ox+58,45),205,330,fill=(75,225,255,alpha),width=max(1,5-i))
