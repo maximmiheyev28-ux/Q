@@ -58,10 +58,15 @@ impl Game {
     }
 }
 fn draw_actor(tex:&Texture2D,atlas:usize,x:f32,y:f32,camera:f32,enemy:bool,elapsed:f32,invuln:f32){
-    let frame=if enemy{0}else{((elapsed*9.0)as usize)%4};
-    let src=Rect::new((atlas*32+frame*32)as f32,0.0,32.0,48.0);
+    let frame=if enemy{0}else{((elapsed*7.0)as usize)%4};
+    let (fw,fh,sx,dx,dy,dw,dh)=if enemy{
+        (32.0,48.0,(atlas*32)as f32,x-camera-13.0,y-36.0,48.0,72.0)
+    }else{
+        (48.0,64.0,(frame*48)as f32,x-camera-30.0,y-58.0,64.0,85.0)
+    };
+    let src=Rect::new(sx,0.0,fw,fh);
     let tint=if !enemy&&invuln>0.0&&((elapsed*18.0)as i32%2==0){Color::from_rgba(255,110,155,255)}else{WHITE};
-    draw_texture_ex(tex,x-camera-13.0,y-36.0,tint,DrawTextureParams{dest_size:Some(vec2(48.0,72.0)),source:Some(src),..Default::default()});
+    draw_texture_ex(tex,dx,dy,tint,DrawTextureParams{dest_size:Some(vec2(dw,dh)),source:Some(src),..Default::default()});
 }
 fn button(x:f32,y:f32,w:f32,h:f32,label:&str){
     draw_rectangle(x,y,w,h,Color::from_rgba(8,22,43,205));
