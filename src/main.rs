@@ -59,7 +59,7 @@ impl Game {
     fn damage(&mut self) { self.hp-=1; if self.hp<=0 {self.dead=true;} }
 }
 
-fn draw_actor(tex:&Texture2D,x:f32,y:f32,camera:f32,enemy:bool) {
+fn draw_actor(tex:&Texture2D,frame:usize,x:f32,y:f32,camera:f32) {
     // Four hand-drawn poses packed into a 4x1 sprite strip (64x96 per frame).
     let frame=if enemy {0}else{((get_time()*7.0) as usize)%4};
     let src=Rect::new(frame as f32*32.0,0.0,32.0,48.0);
@@ -141,7 +141,7 @@ async fn main() {
             draw_rectangle(game.player.x-game.camera,game.player.y,22.0,29.0,SKYBLUE);
             for e in &game.enemies {if e.alive {draw_rectangle(e.x-game.camera,e.y,22.0,29.0,PINK);}}
         }
-        if game.slash>0.0 {draw_circle_lines(game.player.x-game.camera+15.0,game.player.y+15.0,36.0,3.0,Color::from_rgba(93,232,255,230));}
+        if game.slash>0.0 {\n            if let Some(fx)=&effects_tex { let frame=((0.28-game.slash)*14.0).clamp(0.0,3.0) as usize; let src=Rect::new(frame as f32*64.0,0.0,64.0,48.0); draw_texture_ex(fx,game.player.x-game.camera-18.0,game.player.y-12.0,WHITE,DrawTextureParams{dest_size:Some(vec2(68.0,52.0)),source:Some(src),..Default::default()}); }\n            else { draw_circle_lines(game.player.x-game.camera+15.0,game.player.y+15.0,36.0,3.0,Color::from_rgba(93,232,255,230)); }\n        }\n        if let Some(pt)=&projectiles_tex { for (i,e) in game.enemies.iter().enumerate() { if e.alive && (e.x-game.player.x).abs()<250.0 { let src=Rect::new(32.0,0.0,16.0,16.0); let px=e.x-game.camera+((game.elapsed*70.0+i as f32*23.0)%60.0)-30.0; draw_texture_ex(pt,px,e.y+7.0,WHITE,DrawTextureParams{dest_size:Some(vec2(16.0,16.0)),source:Some(src),..Default::default()}); } } }
         draw_text("NEON BLADE  //  SECTOR 07",10.0,14.0,10.0,Color::from_rgba(78,225,245,255));
         draw_text(&format!("HP {}", "◆".repeat(game.hp.max(0) as usize)),10.0,28.0,10.0,PINK);
         draw_text(&format!("ELIMINATED {}/3",game.kills),370.0,14.0,10.0,WHITE);
