@@ -32,9 +32,9 @@ EXPECTED = {
     "enemy_brawler_kick.png": (480, 63),
     "enemy_brawler_hurt.png": (192, 63),
 }
-
-PNG_MAGIC = b"\\x89PNG\\r\\n\\x1a\\n"
+PNG_MAGIC = bytes((137, 80, 78, 71, 13, 10, 26, 10))
 errors = []
+
 for name, expected in EXPECTED.items():
     path = Path("assets") / name
     if not path.is_file():
@@ -55,9 +55,10 @@ for name in ("player_asset_license.txt", "boss_asset_license.txt", "ART_CREDITS.
         errors.append(f"Missing asset documentation: assets/{name}")
 
 if Path("assets/generate_assets.py").exists():
-    errors.append("Procedural art generator must not be present in the project.")
+    errors.append("The procedural image generator must not be present.")
 
 if errors:
     print("\\n".join(errors), file=sys.stderr)
     sys.exit(1)
+
 print(f"Validated {len(EXPECTED)} committed game PNG files. No image generation is performed.")
