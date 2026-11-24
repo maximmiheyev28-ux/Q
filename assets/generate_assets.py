@@ -125,8 +125,7 @@ def actor(kind,frame):
     a=Image.new("RGBA....................",size,(0,0,0,0)); p=ImageDraw.Draw(a)
     bob=frame%2
     if kind=="hero":
-        return authored_hero(frame)
-        # Hand-authored pixel sprite: 48x64 native pixels, four deliberate animation poses.
+        # Use the fully layered, hand-authored 48x64 sprite below; never substitute the rough bitmap draft.
         ink=(5,8,20,255); deep=(12,18,36,255); navy=(23,34,58,255)
         steel=(43,62,91,255); mid=(75,103,139,255); pale=(139,174,205,255)
         red=(190,27,68,255); scarlet=(246,54,96,255); gold=(244,183,95,255)
