@@ -178,9 +178,7 @@ def actor(kind,frame):
         p.line((16,30,16,39),fill=glow,width=2); p.ellipse((11,37,21,47),outline=glow,width=2)
         p.line((12,40,20,40),fill=cyan,width=1)
     return a
-hero=Image.new("RGBA",(128,48),(0,0,0,0))
-for i in range(4): hero.alpha_composite(actor("hero",i),(i*32,0))
-hero.save("assets/samurai.png")
+hero=Image.new("RGBA",(192,64),(0,0,0,0))\nfor i in range(4): hero.alpha_composite(actor("hero",i),(i*48,0))\nhero.save("assets/samurai.png")
 foes=Image.new("RGBA",(96,48),(0,0,0,0))
 for i,k in enumerate(("ninja","gunner","drone")): foes.alpha_composite(actor(k,0),(i*32,0))
 foes.save("assets/enemies.png")
