@@ -15,7 +15,7 @@ jobs:
       - name: Prepare PNG assets
         run: |
           python3 -m pip install --quiet pillow
-          python3 assets/generate_assets.py
+          python3 assets/validate_assets.py
           file assets/*.png
           python3 - <<'PY'
           from PIL import Image
