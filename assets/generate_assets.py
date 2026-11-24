@@ -56,12 +56,76 @@ t.rectangle((2,7,4,9),fill=(64,112,137,255)); t.rectangle((12,7,14,9),fill=(64,1
 t.point((7,8),fill=(30,202,224,255)); tile.save("assets/metal_tile.png")
 
 # Pixel-art character builder: distinct silhouettes and palettes.
+# Authored bitmap pixel art (24x32), not polygon/shape-built character art.
+# Each character is a deliberately placed pixel cluster; nearest-neighbour scale preserves pixels.
+HERO_PIXELS = [
+"........................",
+".......HHHH.............",
+"......HBBBBHH...........",
+".....HBBBBBBH....R.......",
+".....HBBWWBBH...RRR......",
+"......HBBBBH.....R.......",
+".......SSSS..............",
+"......SMMMS..............",
+".....SMMMMMS.............",
+".....SMMR MMS............",
+"......SMMMMM.............",
+".......MMKMM.............",
+"......AAMMMAA............",
+".....AAAMMMMAA...........",
+"....AAAAMMMMAAAA.........",
+".....AAMMMMMMAA..........",
+"......MMCCCCMM...........",
+"......MMCCKMMM............",
+".....MMMCCMMMM...........",
+".....MMMRRMMMM....G.......",
+".....MMMRRMMM....GGG......",
+"......MMMMMM.....G........",
+"......MM..MM..............",
+"......MM..MM..............",
+".....MMM..MMM.............",
+".....MMM..MMM.............",
+"....NNNN..NNNN............",
+"....NLLN..NLLN............",
+"....NLLN..NLLN............",
+"....NNNN..NNNN............",
+"....N....N................",
+"....NN..NN................",
+]
+HERO_PALETTE = {
+".": (0,0,0,0), "H": (9,12,28,255), "B": (27,39,67,255),
+"W": (78,225,255,255), "R": (235,43,91,255), "S": (16,23,43,255),
+"M": (64,87,119,255), "K": (238,180,94,255), "A": (32,48,76,255),
+"C": (185,25,64,255), "G": (245,193,110,255), "N": (5,8,20,255),
+"L": (111,144,177,255),
+}
+def authored_hero(frame):
+    base = Image.new("RGBA", (24,32), (0,0,0,0))
+    px = base.load()
+    for y,row in enumerate(HERO_PIXELS):
+        for x,ch in enumerate(row):
+            px[x,y] = HERO_PALETTE[ch]
+    # Hand-authored frame accents: coat and feet shift through a 4-frame walk.
+    accents = ImageDraw.Draw(base)
+    shift = (0,1,0,-1)[frame % 4]
+    accents.point((6,24), fill=HERO_PALETTE["C"])
+    accents.point((7,25), fill=HERO_PALETTE["R"])
+    accents.point((17,24), fill=HERO_PALETTE["C"])
+    accents.point((16,25), fill=HERO_PALETTE["R"])
+    # katana pixels, with a restrained frame-by-frame angle change
+    sword = [((19,15),(22,11),(23,10)),((19,15),(23,9),(23,8)),
+             ((19,15),(22,12),(23,11)),((19,15),(21,13),(22,12))][frame%4]
+    accents.line((sword[0],sword[1]), fill=(110,231,255,255), width=1)
+    accents.point(sword[2], fill=(245,255,255,255))
+    return base.resize((48,64), Image.Resampling.NEAREST)
+
 def actor(kind,frame):
     # Carefully layered native-resolution pixel character art.
     size=(48,64) if kind=="hero" else (32,48)
     a=Image.new("RGBA",size,(0,0,0,0)); p=ImageDraw.Draw(a)
     bob=frame%2
     if kind=="hero":
+        return authored_hero(frame)
         # Hand-authored pixel sprite: 48x64 native pixels, four deliberate animation poses.
         ink=(5,8,20,255); deep=(12,18,36,255); navy=(23,34,58,255)
         steel=(43,62,91,255); mid=(75,103,139,255); pale=(139,174,205,255)
