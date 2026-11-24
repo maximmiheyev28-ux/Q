@@ -18,6 +18,7 @@ jobs:
           base64 -d app/src/main/assets/city.png.b64 > assets/city.png
           base64 -d app/src/main/assets/sprites.png.b64 > assets/sprites.png
           base64 -d app/src/main/assets/metal_tile.png.b64 > assets/metal_tile.png
+          cp app/src/main/assets/samurai.png assets/samurai.png
           file assets/*.png
       - name: Build native Rust Android APK
         run: |
