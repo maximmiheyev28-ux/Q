@@ -62,7 +62,7 @@ impl Game {
 fn draw_actor(tex:&Texture2D,x:f32,y:f32,camera:f32,enemy:bool) {
     // Four hand-drawn poses packed into a 4x1 sprite strip (64x96 per frame).
     let frame=if enemy {0}else{((get_time()*7.0) as usize)%4};
-    let src=Rect::new(frame as f32*64.0,0.0,64.0,96.0);
+    let src=Rect::new(frame as f32*32.0,0.0,32.0,48.0);
     let tint=if enemy {Color::from_rgba(255,190,205,255)} else {WHITE};
     draw_texture_ex(tex,x-camera-13.0,y-36.0,tint,DrawTextureParams{dest_size:Some(vec2(48.0,72.0)),source:Some(src),..Default::default()});
     if enemy { draw_rectangle(x-camera+5.0,y+1.0,17.0,2.0,Color::from_rgba(255,56,146,255)); }
