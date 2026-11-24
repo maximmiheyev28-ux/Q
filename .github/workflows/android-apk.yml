@@ -14,12 +14,21 @@ jobs:
       - uses: actions/checkout@v4
       - name: Prepare PNG assets
         run: |
-          mkdir -p assets
-          base64 -d app/src/main/assets/city.png.b64 > assets/city.png
-          base64 -d app/src/main/assets/sprites.png.b64 > assets/sprites.png
-          base64 -d app/src/main/assets/metal_tile.png.b64 > assets/metal_tile.png
-          cp app/src/main/assets/samurai.png assets/samurai.png
+          python3 -m pip install --quiet pillow
+          python3 assets/generate_assets.py
           file assets/*.png
+          python3 - <<'PY'
+          from PIL import Image
+          import glob, os
+          required = {"city.png": (480,270), "metal_tile.png": (16,16), "samurai.png": (128,48), "enemies.png": (96,48), "projectiles.png": (64,16), "effects.png": (256,48)}
+          for name, size in required.items():
+              path = os.path.join("assets", name)
+              assert os.path.isfile(path), f"Missing asset: {name}"
+              with Image.open(path) as image:
+                  assert image.size == size, f"{name}: expected {size}, got {image.size}"
+                  assert image.mode == "RGBA", f"{name}: expected RGBA"
+          print("All six game texture assets verified.")
+          PY
       - name: Build native Rust Android APK
         run: |
           docker run --rm -v "${{ github.workspace }}:/root/src" -w /root/src notfl3/cargo-apk cargo quad-apk build --release
