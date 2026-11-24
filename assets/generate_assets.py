@@ -58,7 +58,7 @@ t.point((7,8),fill=(30,202,224,255)); tile.save("assets/metal_tile.png")
 # Pixel-art character builder: distinct silhouettes and palettes.
 def actor(kind,frame):
     # Carefully layered native-resolution pixel character art.
-    a=Image.new("RGBA",(32,48),(0,0,0,0)); p=ImageDraw.Draw(a)
+    size=(48,64) if kind=="hero" else (32,48)\n    a=Image.new("RGBA",size,(0,0,0,0)); p=ImageDraw.Draw(a)
     bob=frame%2
     if kind=="hero":
         # Hand-authored pixel sprite: 48x64 native pixels, four deliberate animation poses.
